@@ -1,0 +1,2620 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyUp V4</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#0b0f19;
+    color:#fff;
+    min-height:100vh;
+}
+
+button,input,textarea,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* LOGIN */
+
+#loginScreen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:
+        radial-gradient(circle at top,#26345c,#0b0f19 55%);
+}
+
+.loginBox{
+    width:100%;
+    max-width:430px;
+    background:#111827;
+    border:1px solid #26334d;
+    border-radius:22px;
+    padding:30px;
+    box-shadow:0 20px 60px #0008;
+}
+
+.logo{
+    text-align:center;
+    font-size:34px;
+    font-weight:900;
+    margin-bottom:8px;
+}
+
+.logo span{
+    color:#7c5cff;
+}
+
+.loginSubtitle{
+    text-align:center;
+    color:#94a3b8;
+    margin-bottom:25px;
+}
+
+.loginBox input{
+    width:100%;
+    padding:14px;
+    margin-bottom:12px;
+    border:1px solid #334155;
+    border-radius:12px;
+    background:#0f172a;
+    color:white;
+    outline:none;
+}
+
+.loginBox input:focus{
+    border-color:#7c5cff;
+}
+
+.primary{
+    width:100%;
+    border:0;
+    padding:14px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#7c5cff,#5b3fd3);
+    color:white;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.secondary{
+    border:1px solid #334155;
+    background:#182235;
+    color:white;
+    padding:10px 14px;
+    border-radius:10px;
+}
+
+.loginSwitch{
+    text-align:center;
+    margin-top:18px;
+    color:#94a3b8;
+}
+
+.loginSwitch span{
+    color:#9b87ff;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* APP */
+
+#app{
+    min-height:100vh;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:245px;
+    background:#0f172a;
+    border-right:1px solid #26334d;
+    padding:20px 14px;
+    z-index:10;
+    overflow-y:auto;
+}
+
+.sidebarLogo{
+    font-size:25px;
+    font-weight:900;
+    padding:8px 12px 25px;
+}
+
+.sidebarLogo span{
+    color:#7c5cff;
+}
+
+.userMini{
+    background:#172033;
+    padding:12px;
+    border-radius:14px;
+    margin-bottom:15px;
+}
+
+.userMini strong{
+    display:block;
+}
+
+.userMini small{
+    color:#94a3b8;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.nav button{
+    width:100%;
+    text-align:left;
+    padding:12px;
+    border:0;
+    border-radius:10px;
+    background:transparent;
+    color:#b8c2d6;
+    font-weight:bold;
+}
+
+.nav button:hover,
+.nav button.active{
+    background:#241d4a;
+    color:white;
+}
+
+.logoutBtn{
+    margin-top:20px;
+    width:100%;
+    padding:11px;
+    border:1px solid #572b35;
+    border-radius:10px;
+    background:#28161c;
+    color:#ff9aa9;
+}
+
+.main{
+    margin-left:245px;
+    padding:25px;
+    max-width:1500px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.topbar h1{
+    font-size:28px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+/* CARDS */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.card{
+    background:#111827;
+    border:1px solid #26334d;
+    border-radius:17px;
+    padding:20px;
+}
+
+.statTitle{
+    color:#94a3b8;
+    font-size:14px;
+}
+
+.statValue{
+    font-size:30px;
+    font-weight:900;
+    margin-top:8px;
+}
+
+.statIcon{
+    font-size:25px;
+}
+
+.sectionTitle{
+    margin:28px 0 14px;
+    font-size:20px;
+}
+
+/* PROGRESS */
+
+.progress{
+    height:10px;
+    background:#202b3d;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.progress div{
+    height:100%;
+    background:linear-gradient(90deg,#7c5cff,#a78bfa);
+    border-radius:20px;
+}
+
+/* TASKS */
+
+.formRow{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.formRow input,
+.formRow select,
+.formRow textarea,
+.card input,
+.card select,
+.card textarea{
+    background:#0c1422;
+    border:1px solid #334155;
+    color:white;
+    border-radius:10px;
+    padding:12px;
+    outline:none;
+}
+
+.formRow input{
+    flex:1;
+    min-width:200px;
+}
+
+.taskItem,
+.noteItem,
+.historyItem{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+    margin-top:10px;
+    background:#151f31;
+    border-radius:12px;
+    border:1px solid #27354e;
+}
+
+.taskDone{
+    text-decoration:line-through;
+    opacity:.5;
+}
+
+.smallBtn{
+    border:0;
+    padding:8px 11px;
+    border-radius:8px;
+    background:#283650;
+    color:white;
+}
+
+/* SUBJECTS */
+
+.subjectGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.subject{
+    background:#111827;
+    border:1px solid #293751;
+    border-radius:16px;
+    padding:18px;
+}
+
+.subject h3{
+    margin-bottom:7px;
+}
+
+.subject p{
+    color:#94a3b8;
+    font-size:14px;
+    margin-bottom:14px;
+}
+
+.subject button{
+    border:0;
+    padding:9px 12px;
+    border-radius:9px;
+    background:#30245e;
+    color:white;
+}
+
+/* TRAINING */
+
+.exercise{
+    background:#151f31;
+    border:1px solid #293751;
+    border-radius:14px;
+    padding:15px;
+    margin-top:10px;
+}
+
+.exercise h3{
+    margin-bottom:6px;
+}
+
+.exercise p{
+    color:#aeb9cc;
+    line-height:1.5;
+}
+
+.exercise button{
+    margin-top:10px;
+}
+
+/* MEALS */
+
+.meal{
+    background:#151f31;
+    border:1px solid #293751;
+    border-radius:14px;
+    padding:15px;
+    margin-top:10px;
+}
+
+.meal h3{
+    margin-bottom:7px;
+}
+
+.meal p{
+    color:#aeb9cc;
+}
+
+/* TIMER */
+
+.timer{
+    text-align:center;
+    padding:40px;
+}
+
+.timerDisplay{
+    font-size:80px;
+    font-weight:900;
+    margin:30px 0;
+}
+
+.timerButtons{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.timerButtons button{
+    padding:12px 20px;
+}
+
+/* CALENDAR */
+
+.calendar{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:7px;
+    margin-top:15px;
+}
+
+.dayName,
+.day{
+    padding:12px 5px;
+    text-align:center;
+    border-radius:9px;
+}
+
+.dayName{
+    color:#8e9bb0;
+    font-weight:bold;
+}
+
+.day{
+    background:#151f31;
+    border:1px solid #27354e;
+}
+
+.day.today{
+    border-color:#9b87ff;
+}
+
+.day.studied{
+    background:#263d32;
+    border-color:#45b978;
+}
+
+/* PROFILE */
+
+.profileHeader{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.avatar{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#7c5cff,#31206e);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    font-weight:bold;
+}
+
+/* ACHIEVEMENTS */
+
+.achievementGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.achievement{
+    padding:20px;
+    border-radius:15px;
+    border:1px solid #293751;
+    background:#151f31;
+}
+
+.achievement.locked{
+    opacity:.4;
+}
+
+.achievementIcon{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .subjectGrid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .achievementGrid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:700px){
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+        border-right:0;
+        border-bottom:1px solid #26334d;
+    }
+
+    .nav{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .main{
+        margin-left:0;
+        padding:15px;
+    }
+
+    .grid,
+    .subjectGrid,
+    .achievementGrid{
+        grid-template-columns:1fr;
+    }
+
+    .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .timerDisplay{
+        font-size:60px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div id="loginScreen">
+
+    <div class="loginBox">
+
+        <div class="logo">Study<span>Up</span> V4</div>
+
+        <div class="loginSubtitle">
+            Seu sistema pessoal de evolução
+        </div>
+
+        <div id="loginForm">
+
+            <input id="loginEmail" type="text" placeholder="Usuário ou e-mail">
+
+            <input id="loginPassword" type="password" placeholder="Senha">
+
+            <button class="primary" onclick="login()">
+                Entrar
+            </button>
+
+            <div class="loginSwitch">
+                Ainda não tem conta?
+                <span onclick="showRegister()">Criar conta</span>
+            </div>
+
+        </div>
+
+        <div id="registerForm" class="hidden">
+
+            <input id="registerName" type="text" placeholder="Seu nome">
+
+            <input id="registerEmail" type="text" placeholder="Usuário ou e-mail">
+
+            <input id="registerPassword" type="password" placeholder="Senha">
+
+            <button class="primary" onclick="register()">
+                Criar conta
+            </button>
+
+            <div class="loginSwitch">
+                Já possui conta?
+                <span onclick="showLogin()">Entrar</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- APP -->
+
+<div id="app" class="hidden">
+
+    <aside class="sidebar">
+
+        <div class="sidebarLogo">
+            Study<span>Up</span> V4
+        </div>
+
+        <div class="userMini">
+            <strong id="miniName">Usuário</strong>
+            <small id="miniRank">Rank E • Nível 1</small>
+        </div>
+
+        <div class="nav">
+
+            <button class="active" onclick="showPage('home')">🏠 Início</button>
+
+            <button onclick="showPage('tasks')">✅ Tarefas</button>
+
+            <button onclick="showPage('subjects')">📚 Matérias</button>
+
+            <button onclick="showPage('training')">🥊 Treinos</button>
+
+            <button onclick="showPage('stretching')">🧘 Alongamentos</button>
+
+            <button onclick="showPage('food')">🥗 Alimentação</button>
+
+            <button onclick="showPage('water')">💧 Água</button>
+
+            <button onclick="showPage('timer')">⏱️ Foco</button>
+
+            <button onclick="showPage('notes')">📝 Anotações</button>
+
+            <button onclick="showPage('questions')">❓ Questões</button>
+
+            <button onclick="showPage('calendar')">📅 Calendário</button>
+
+            <button onclick="showPage('progress')">📊 Progresso</button>
+
+            <button onclick="showPage('achievements')">🏆 Conquistas</button>
+
+            <button onclick="showPage('profile')">👤 Perfil</button>
+
+        </div>
+
+        <button class="logoutBtn" onclick="logout()">
+            Sair da conta
+        </button>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <h1 id="pageTitle">Início</h1>
+
+            <div>
+                <strong id="topXP">0 XP</strong>
+            </div>
+
+        </div>
+
+
+        <!-- HOME -->
+
+        <section id="home" class="page active">
+
+            <div class="grid">
+
+                <div class="card">
+                    <div class="statIcon">⭐</div>
+                    <div class="statTitle">XP</div>
+                    <div class="statValue" id="homeXP">0</div>
+                </div>
+
+                <div class="card">
+                    <div class="statIcon">🔥</div>
+                    <div class="statTitle">Sequência</div>
+                    <div class="statValue" id="homeStreak">0</div>
+                </div>
+
+                <div class="card">
+                    <div class="statIcon">📈</div>
+                    <div class="statTitle">Nível</div>
+                    <div class="statValue" id="homeLevel">1</div>
+                </div>
+
+                <div class="card">
+                    <div class="statIcon">⏱️</div>
+                    <div class="statTitle">Minutos estudados</div>
+                    <div class="statValue" id="homeMinutes">0</div>
+                </div>
+
+            </div>
+
+
+            <h2 class="sectionTitle">Progresso diário</h2>
+
+            <div class="card">
+
+                <strong id="dailyText">0 / 100 XP</strong>
+
+                <div class="progress">
+                    <div id="dailyBar" style="width:0%"></div>
+                </div>
+
+            </div>
+
+
+            <h2 class="sectionTitle">Progresso semanal</h2>
+
+            <div class="card">
+
+                <strong id="weeklyText">0 / 500 XP</strong>
+
+                <div class="progress">
+                    <div id="weeklyBar" style="width:0%"></div>
+                </div>
+
+            </div>
+
+
+            <h2 class="sectionTitle">Mensagem do sistema</h2>
+
+            <div class="card">
+
+                <h2 id="motivation">
+                    Comece pequeno. Continue todos os dias.
+                </h2>
+
+            </div>
+
+        </section>
+
+
+        <!-- TASKS -->
+
+        <section id="tasks" class="page">
+
+            <div class="card">
+
+                <h2>Nova tarefa</h2>
+
+                <br>
+
+                <div class="formRow">
+
+                    <input id="taskInput" placeholder="Ex: Estudar matemática">
+
+                    <select id="taskSubject">
+
+                        <option>Matemática</option>
+                        <option>Português</option>
+                        <option>História</option>
+                        <option>Geografia</option>
+                        <option>Ciências</option>
+                        <option>Inglês</option>
+                        <option>Química</option>
+                        <option>Física</option>
+                        <option>Biologia</option>
+                        <option>Filosofia</option>
+                        <option>Sociologia</option>
+
+                    </select>
+
+                    <button class="primary" style="width:auto" onclick="addTask()">
+                        Adicionar
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="card" style="margin-top:15px">
+
+                <h2>Minhas tarefas</h2>
+
+                <div id="taskList"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SUBJECTS -->
+
+        <section id="subjects" class="page">
+
+            <div class="subjectGrid" id="subjectList"></div>
+
+        </section>
+
+
+        <!-- TRAINING -->
+
+        <section id="training" class="page">
+
+            <div class="card">
+
+                <h2>🥊 Guia de treino</h2>
+
+                <p style="color:#94a3b8;margin-top:8px">
+                    Use como organização geral. Ajuste o treino com um professor,
+                    principalmente em atividades de luta.
+                </p>
+
+            </div>
+
+            <div class="sectionTitle">Aquecimento</div>
+
+            <div class="exercise">
+                <h3>🚶 Aquecimento leve</h3>
+                <p>Movimento leve por alguns minutos para preparar o corpo.</p>
+                <button class="smallBtn" onclick="completeTraining('Aquecimento')">
+                    Concluir
+                </button>
+            </div>
+
+            <div class="exercise">
+                <h3>🥊 Técnica</h3>
+                <p>Treino técnico conforme orientação do seu professor.</p>
+                <button class="smallBtn" onclick="completeTraining('Técnica')">
+                    Concluir
+                </button>
+            </div>
+
+            <div class="exercise">
+                <h3>🏃 Condicionamento</h3>
+                <p>Atividade física adequada ao seu nível e orientação.</p>
+                <button class="smallBtn" onclick="completeTraining('Condicionamento')">
+                    Concluir
+                </button>
+            </div>
+
+            <div class="exercise">
+                <h3>🧘 Recuperação</h3>
+                <p>Finalize diminuindo gradualmente a intensidade.</p>
+                <button class="smallBtn" onclick="completeTraining('Recuperação')">
+                    Concluir
+                </button>
+            </div>
+
+        </section>
+
+
+        <!-- STRETCHING -->
+
+        <section id="stretching" class="page">
+
+            <div class="card">
+
+                <h2>🧘 Alongamentos</h2>
+
+                <p style="color:#94a3b8;margin-top:8px">
+                    Faça movimentos confortáveis e sem forçar até sentir dor.
+                </p>
+
+            </div>
+
+            <div class="exercise">
+                <h3>Pescoço</h3>
+                <p>Movimente lentamente para os lados, sem forçar.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Ombros</h3>
+                <p>Movimentos circulares leves dos ombros.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Pernas</h3>
+                <p>Alongamento leve das pernas, mantendo uma posição confortável.</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Quadril</h3>
+                <p>Movimentos leves de mobilidade do quadril.</p>
+            </div>
+
+            <button class="primary" style="margin-top:15px" onclick="addXP(10)">
+                Concluir sessão de alongamento +10 XP
+            </button>
+
+        </section>
+
+
+        <!-- FOOD -->
+
+        <section id="food" class="page">
+
+            <div class="card">
+
+                <h2>🥗 Organização alimentar</h2>
+
+                <p style="color:#94a3b8;margin-top:8px">
+                    O objetivo aqui é organizar refeições equilibradas,
+                    não fazer restrições extremas.
+                </p>
+
+            </div>
+
+            <div class="meal">
+                <h3>🌅 Café da manhã</h3>
+                <p>Uma combinação de alimentos variados, como fruta,
+                    pão/cereal e uma fonte de proteína.</p>
+            </div>
+
+            <div class="meal">
+                <h3>🍛 Almoço</h3>
+                <p>Uma refeição variada com carboidrato, proteína,
+                    legumes/verduras e outros alimentos.</p>
+            </div>
+
+            <div class="meal">
+                <h3>🍎 Lanche</h3>
+                <p>Uma opção simples conforme sua fome e rotina.</p>
+            </div>
+
+            <div class="meal">
+                <h3>🌙 Jantar</h3>
+                <p>Uma refeição equilibrada e adequada à sua rotina.</p>
+            </div>
+
+        </section>
+
+
+        <!-- WATER -->
+
+        <section id="water" class="page">
+
+            <div class="card">
+
+                <h2>💧 Água</h2>
+
+                <p style="color:#94a3b8;margin-top:8px">
+                    Registre cada copo para acompanhar seu hábito.
+                </p>
+
+                <h1 style="margin-top:20px">
+                    <span id="waterCount">0</span> copos
+                </h1>
+
+                <button class="primary" style="margin-top:15px" onclick="addWater()">
+                    + Registrar copo
+                </button>
+
+                <button class="secondary" style="margin-top:10px" onclick="resetWater()">
+                    Resetar
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- TIMER -->
+
+        <section id="timer" class="page">
+
+            <div class="card timer">
+
+                <h2>⏱️ Foco</h2>
+
+                <div class="timerDisplay" id="timerDisplay">
+                    25:00
+                </div>
+
+                <div class="timerButtons">
+
+                    <button class="primary" style="width:auto" onclick="startTimer()">
+                        Iniciar
+                    </button>
+
+                    <button class="secondary" onclick="pauseTimer()">
+                        Pausar
+                    </button>
+
+                    <button class="secondary" onclick="resetTimer()">
+                        Resetar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NOTES -->
+
+        <section id="notes" class="page">
+
+            <div class="card">
+
+                <h2>📝 Nova anotação</h2>
+
+                <br>
+
+                <input id="noteTitle" placeholder="Título" style="width:100%">
+
+                <br><br>
+
+                <textarea id="noteText"
+                    placeholder="Escreva sua anotação..."
+                    style="width:100%;min-height:150px"></textarea>
+
+                <br><br>
+
+                <button class="primary" onclick="addNote()">
+                    Salvar anotação
+                </button>
+
+            </div>
+
+            <div class="card" style="margin-top:15px">
+
+                <h2>Minhas anotações</h2>
+
+                <div id="noteList"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUESTIONS -->
+
+        <section id="questions" class="page">
+
+            <div class="card">
+
+                <h2>❓ Questões</h2>
+
+                <select id="quizSubject" style="width:100%;margin-top:15px">
+                    <option>Matemática</option>
+                    <option>Português</option>
+                    <option>História</option>
+                    <option>Geografia</option>
+                    <option>Ciências</option>
+                </select>
+
+                <button class="primary" onclick="newQuestion()">
+                    Nova questão
+                </button>
+
+                <div id="questionArea" style="margin-top:20px"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CALENDAR -->
+
+        <section id="calendar" class="page">
+
+            <div class="card">
+
+                <h2>📅 Calendário</h2>
+
+                <p id="calendarMonth"
+                   style="color:#94a3b8;margin-top:7px"></p>
+
+                <div class="calendar" id="calendarContent"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROGRESS -->
+
+        <section id="progress" class="page">
+
+            <div class="grid">
+
+                <div class="card">
+                    <div class="statTitle">XP total</div>
+                    <div class="statValue" id="progressXP">0</div>
+                </div>
+
+                <div class="card">
+                    <div class="statTitle">Minutos</div>
+                    <div class="statValue" id="progressMinutes">0</div>
+                </div>
+
+                <div class="card">
+                    <div class="statTitle">Questões certas</div>
+                    <div class="statValue" id="correct">0</div>
+                </div>
+
+                <div class="card">
+                    <div class="statTitle">Precisão</div>
+                    <div class="statValue" id="accuracy">0%</div>
+                </div>
+
+            </div>
+
+            <h2 class="sectionTitle">Nível</h2>
+
+            <div class="card">
+
+                <h2 id="levelText">Nível 1</h2>
+
+                <div class="progress">
+                    <div id="levelBar" style="width:0%"></div>
+                </div>
+
+                <p id="levelXPText"
+                   style="margin-top:8px;color:#94a3b8">
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ACHIEVEMENTS -->
+
+        <section id="achievements" class="page">
+
+            <div class="achievementGrid" id="achievementList"></div>
+
+        </section>
+
+
+        <!-- PROFILE -->
+
+        <section id="profile" class="page">
+
+            <div class="card">
+
+                <div class="profileHeader">
+
+                    <div class="avatar" id="profileAvatar">
+                        U
+                    </div>
+
+                    <div>
+
+                        <h2 id="profileName">
+                            Usuário
+                        </h2>
+
+                        <p id="profileRank"
+                           style="color:#94a3b8">
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card" style="margin-top:15px">
+
+                <h2>💾 Backup</h2>
+
+                <p style="color:#94a3b8;margin:8px 0 15px">
+                    Salve seus dados em um arquivo ou restaure um backup.
+                </p>
+
+                <button class="primary" onclick="exportBackup()">
+                    Exportar backup
+                </button>
+
+                <br><br>
+
+                <input type="file"
+                       id="importFile"
+                       accept=".json"
+                       onchange="importBackup(event)">
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   BANCO LOCAL
+========================================================= */
+
+const defaultDB = {
+    users: {},
+    currentUser: null
+};
+
+let db = JSON.parse(
+    localStorage.getItem("studyup_v4_db") ||
+    JSON.stringify(defaultDB)
+);
+
+let current = null;
+
+let timerSeconds = 25 * 60;
+let timerInterval = null;
+
+
+/* =========================================================
+   SALVAR BANCO
+========================================================= */
+
+function saveDB(){
+
+    localStorage.setItem(
+        "studyup_v4_db",
+        JSON.stringify(db)
+    );
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function showRegister(){
+
+    document.getElementById("loginForm")
+        .classList.add("hidden");
+
+    document.getElementById("registerForm")
+        .classList.remove("hidden");
+
+}
+
+function showLogin(){
+
+    document.getElementById("registerForm")
+        .classList.add("hidden");
+
+    document.getElementById("loginForm")
+        .classList.remove("hidden");
+
+}
+
+
+function register(){
+
+    const name =
+        document.getElementById("registerName").value.trim();
+
+    const email =
+        document.getElementById("registerEmail").value.trim().toLowerCase();
+
+    const password =
+        document.getElementById("registerPassword").value;
+
+    if(!name || !email || !password){
+
+        alert("Preencha todos os campos.");
+
+        return;
+    }
+
+    if(db.users[email]){
+
+        alert("Essa conta já existe.");
+
+        return;
+    }
+
+    db.users[email] = {
+
+        name:name,
+        email:email,
+        password:password,
+
+        xp:0,
+        level:1,
+
+        tasks:[],
+        notes:[],
+
+        studiedDays:[],
+
+        studyMinutes:0,
+
+        correct:0,
+        answered:0,
+
+        training:[],
+
+        water:0,
+
+        achievements:[]
+
+    };
+
+    db.currentUser = email;
+
+    saveDB();
+
+    openApp();
+
+}
+
+
+function login(){
+
+    const email =
+        document.getElementById("loginEmail")
+        .value.trim().toLowerCase();
+
+    const password =
+        document.getElementById("loginPassword")
+        .value;
+
+    const user = db.users[email];
+
+    if(!user){
+
+        alert("Conta não encontrada.");
+
+        return;
+    }
+
+    if(user.password !== password){
+
+        alert("Senha incorreta.");
+
+        return;
+    }
+
+    db.currentUser = email;
+
+    saveDB();
+
+    openApp();
+
+}
+
+
+function logout(){
+
+    db.currentUser = null;
+
+    saveDB();
+
+    location.reload();
+
+}
+
+
+/* =========================================================
+   ABRIR APP
+========================================================= */
+
+function openApp(){
+
+    current = db.users[db.currentUser];
+
+    document.getElementById("loginScreen")
+        .classList.add("hidden");
+
+    document.getElementById("app")
+        .classList.remove("hidden");
+
+    updateAll();
+
+}
+
+
+/* =========================================================
+   XP / LEVEL / RANK
+========================================================= */
+
+function getLevel(){
+
+    return Math.floor(current.xp / 100) + 1;
+
+}
+
+
+function getRank(){
+
+    const level = getLevel();
+
+    if(level >= 50) return "S";
+    if(level >= 35) return "A";
+    if(level >= 25) return "B";
+    if(level >= 15) return "C";
+    if(level >= 5) return "D";
+
+    return "E";
+
+}
+
+
+function addXP(amount){
+
+    current.xp += amount;
+
+    current.level = getLevel();
+
+    saveDB();
+
+    updateAll();
+
+}
+
+
+function getToday(){
+
+    return new Date()
+        .toISOString()
+        .split("T")[0];
+
+}
+
+
+function markStudy(){
+
+    const today = getToday();
+
+    if(!current.studiedDays.includes(today)){
+
+        current.studiedDays.push(today);
+
+    }
+
+    saveDB();
+
+}
+
+
+/* =========================================================
+   STREAK
+========================================================= */
+
+function getStreak(){
+
+    let streak = 0;
+
+    const dates = [...current.studiedDays]
+        .sort()
+        .reverse();
+
+    let date = new Date();
+
+    for(let i=0;i<dates.length;i++){
+
+        const expected =
+            new Date(date)
+            .toISOString()
+            .split("T")[0];
+
+        if(dates[i] === expected){
+
+            streak++;
+
+            date.setDate(
+                date.getDate()-1
+            );
+
+        }else{
+
+            break;
+
+        }
+
+    }
+
+    return streak;
+
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+const motivationalMessages = [
+
+    "Comece pequeno. Continue todos os dias.",
+
+    "Disciplina vence a falta de vontade.",
+
+    "Cada sessão conta.",
+
+    "Seu progresso é construído um dia de cada vez.",
+
+    "Não precisa ser perfeito. Precisa continuar.",
+
+    "Hoje é mais uma oportunidade para evoluir."
+
+];
+
+
+function renderHome(){
+
+    document.getElementById("homeXP").textContent =
+        current.xp;
+
+    document.getElementById("homeLevel").textContent =
+        getLevel();
+
+    document.getElementById("homeStreak").textContent =
+        getStreak();
+
+    document.getElementById("homeMinutes").textContent =
+        current.studyMinutes;
+
+    document.getElementById("topXP").textContent =
+        current.xp + " XP";
+
+    const dailyXP =
+        Math.min(current.xp % 100,100);
+
+    document.getElementById("dailyBar")
+        .style.width = dailyXP + "%";
+
+    document.getElementById("dailyText")
+        .textContent =
+        dailyXP + " / 100 XP";
+
+    const weeklyXP =
+        Math.min(current.xp % 500,500);
+
+    document.getElementById("weeklyBar")
+        .style.width =
+        (weeklyXP/5) + "%";
+
+    document.getElementById("weeklyText")
+        .textContent =
+        weeklyXP + " / 500 XP";
+
+    const index =
+        Math.floor(Date.now()/86400000)
+        % motivationalMessages.length;
+
+    document.getElementById("motivation")
+        .textContent =
+        motivationalMessages[index];
+
+}
+
+
+/* =========================================================
+   NAVIGAÇÃO
+========================================================= */
+
+const titles = {
+
+    home:"Início",
+    tasks:"Tarefas",
+    subjects:"Matérias",
+    training:"Treinos",
+    stretching:"Alongamentos",
+    food:"Alimentação",
+    water:"Água",
+    timer:"Foco",
+    notes:"Anotações",
+    questions:"Questões",
+    calendar:"Calendário",
+    progress:"Progresso",
+    achievements:"Conquistas",
+    profile:"Perfil"
+
+};
+
+
+function showPage(id){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page=>{
+            page.classList.remove("active");
+        });
+
+    const page =
+        document.getElementById(id);
+
+    if(page)
+        page.classList.add("active");
+
+    document
+        .querySelectorAll(".nav button")
+        .forEach(button=>{
+            button.classList.remove("active");
+
+            if(
+                button
+                .getAttribute("onclick")
+                ?.includes("'" + id + "'")
+            ){
+                button.classList.add("active");
+            }
+
+        });
+
+    document.getElementById("pageTitle")
+        .textContent =
+        titles[id] || "StudyUp";
+
+    if(id==="home") renderHome();
+    if(id==="tasks") renderTasks();
+    if(id==="subjects") renderSubjects();
+    if(id==="notes") renderNotes();
+    if(id==="calendar") renderCalendar();
+    if(id==="progress") renderProgress();
+    if(id==="achievements") renderAchievements();
+    if(id==="profile") renderProfile();
+    if(id==="water") renderWater();
+
+}
+
+
+/* =========================================================
+   TAREFAS
+========================================================= */
+
+function addTask(){
+
+    const input =
+        document.getElementById("taskInput");
+
+    const subject =
+        document.getElementById("taskSubject").value;
+
+    const text =
+        input.value.trim();
+
+    if(!text){
+
+        alert("Digite uma tarefa.");
+
+        return;
+    }
+
+    current.tasks.push({
+
+        id:Date.now(),
+
+        text:text,
+
+        subject:subject,
+
+        done:false
+
+    });
+
+    input.value = "";
+
+    saveDB();
+
+    renderTasks();
+
+}
+
+
+function renderTasks(){
+
+    const list =
+        document.getElementById("taskList");
+
+    if(!current.tasks.length){
+
+        list.innerHTML =
+            "<p style='color:#94a3b8;margin-top:15px'>Nenhuma tarefa ainda.</p>";
+
+        return;
+    }
+
+    list.innerHTML =
+        current.tasks.map(task=>`
+
+            <div class="taskItem">
+
+                <div class="${task.done ? "taskDone":""}">
+
+                    <strong>${escapeHTML(task.text)}</strong>
+
+                    <small style="display:block;color:#94a3b8">
+                        ${escapeHTML(task.subject)}
+                    </small>
+
+                </div>
+
+                <div>
+
+                    <button class="smallBtn"
+                        onclick="toggleTask(${task.id})">
+
+                        ${task.done ? "↩️":"✓"}
+
+                    </button>
+
+                    <button class="smallBtn"
+                        onclick="deleteTask(${task.id})">
+
+                        🗑️
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function toggleTask(id){
+
+    const task =
+        current.tasks.find(t=>t.id===id);
+
+    if(!task) return;
+
+    if(!task.done){
+
+        task.done = true;
+
+        markStudy();
+
+        addXP(20);
+
+    }else{
+
+        task.done = false;
+
+    }
+
+    saveDB();
+
+    renderTasks();
+
+}
+
+
+function deleteTask(id){
+
+    current.tasks =
+        current.tasks.filter(t=>t.id!==id);
+
+    saveDB();
+
+    renderTasks();
+
+}
+
+
+/* =========================================================
+   MATÉRIAS
+========================================================= */
+
+const subjects = [
+
+    ["Matemática","Números, álgebra, geometria e problemas."],
+    ["Português","Gramática, literatura, interpretação e redação."],
+    ["História","Civilizações, acontecimentos e sociedade."],
+    ["Geografia","Espaço, território, clima e população."],
+    ["Ciências","Natureza, matéria, energia e vida."],
+    ["Inglês","Vocabulário, gramática e interpretação."],
+    ["Química","Matéria, átomos, reações e substâncias."],
+    ["Física","Movimento, força, energia e fenômenos físicos."],
+    ["Biologia","Seres vivos, células e ecologia."],
+    ["Filosofia","Pensamento crítico e ideias filosóficas."],
+    ["Sociologia","Sociedade, cultura e relações sociais."],
+    ["Artes","Expressão artística e história da arte."],
+    ["Espanhol","Vocabulário, leitura e gramática."],
+    ["Tecnologia","Computadores, programação e tecnologia."],
+    ["Educação Financeira","Organização, planejamento e dinheiro."]
+
+];
+
+
+function renderSubjects(){
+
+    const list =
+        document.getElementById("subjectList");
+
+    list.innerHTML =
+        subjects.map(s=>`
+
+            <div class="subject">
+
+                <h3>📘 ${s[0]}</h3>
+
+                <p>${s[1]}</p>
+
+                <button onclick="studySubject('${s[0]}')">
+                    + Estudar
+                </button>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function studySubject(name){
+
+    markStudy();
+
+    current.studyMinutes += 10;
+
+    addXP(25);
+
+    alert(
+        "Sessão registrada em " +
+        name +
+        "! +25 XP"
+    );
+
+}
+
+
+/* =========================================================
+   TREINOS
+========================================================= */
+
+function completeTraining(name){
+
+    current.training.push({
+
+        name:name,
+
+        date:new Date().toLocaleDateString("pt-BR")
+
+    });
+
+    markStudy();
+
+    addXP(15);
+
+    alert(
+        name +
+        " registrado! +15 XP"
+    );
+
+}
+
+
+/* =========================================================
+   ÁGUA
+========================================================= */
+
+function addWater(){
+
+    current.water++;
+
+    saveDB();
+
+    renderWater();
+
+    addXP(2);
+
+}
+
+
+function resetWater(){
+
+    current.water = 0;
+
+    saveDB();
+
+    renderWater();
+
+}
+
+
+function renderWater(){
+
+    document.getElementById("waterCount")
+        .textContent =
+        current.water;
+
+}
+
+
+/* =========================================================
+   NOTAS
+========================================================= */
+
+function addNote(){
+
+    const title =
+        document.getElementById("noteTitle")
+        .value.trim();
+
+    const text =
+        document.getElementById("noteText")
+        .value.trim();
+
+    if(!title || !text){
+
+        alert("Preencha título e conteúdo.");
+
+        return;
+    }
+
+    current.notes.push({
+
+        id:Date.now(),
+
+        title:title,
+
+        text:text
+
+    });
+
+    document.getElementById("noteTitle").value="";
+    document.getElementById("noteText").value="";
+
+    saveDB();
+
+    renderNotes();
+
+}
+
+
+function renderNotes(){
+
+    const list =
+        document.getElementById("noteList");
+
+    if(!current.notes.length){
+
+        list.innerHTML =
+            "<p style='color:#94a3b8;margin-top:15px'>Nenhuma anotação.</p>";
+
+        return;
+    }
+
+    list.innerHTML =
+        current.notes.map(note=>`
+
+            <div class="noteItem">
+
+                <div>
+
+                    <strong>
+                        ${escapeHTML(note.title)}
+                    </strong>
+
+                    <p style="color:#aeb9cc;margin-top:5px">
+                        ${escapeHTML(note.text)}
+                    </p>
+
+                </div>
+
+                <button class="smallBtn"
+                    onclick="deleteNote(${note.id})">
+
+                    🗑️
+
+                </button>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function deleteNote(id){
+
+    current.notes =
+        current.notes.filter(n=>n.id!==id);
+
+    saveDB();
+
+    renderNotes();
+
+}
+
+
+/* =========================================================
+   QUESTÕES
+========================================================= */
+
+const questions = [
+
+    {
+        subject:"Matemática",
+        text:"Quanto é 8 × 7?",
+        options:["54","56","64","48"],
+        answer:1
+    },
+
+    {
+        subject:"Português",
+        text:"Qual palavra é um substantivo?",
+        options:["Casa","Correr","Bonito","Rapidamente"],
+        answer:0
+    },
+
+    {
+        subject:"História",
+        text:"Qual civilização construiu as pirâmides de Gizé?",
+        options:["Roma","Egito Antigo","Grécia","China"],
+        answer:1
+    },
+
+    {
+        subject:"Geografia",
+        text:"Qual é o maior continente do planeta?",
+        options:["África","Europa","Ásia","Oceania"],
+        answer:2
+    },
+
+    {
+        subject:"Ciências",
+        text:"Qual órgão bombeia o sangue pelo corpo?",
+        options:["Pulmão","Coração","Estômago","Fígado"],
+        answer:1
+    }
+
+];
+
+
+let currentQuestion = null;
+
+
+function newQuestion(){
+
+    const subject =
+        document.getElementById("quizSubject").value;
+
+    const available =
+        questions.filter(q=>q.subject===subject);
+
+    currentQuestion =
+        available[
+            Math.floor(Math.random()*available.length)
+        ];
+
+    const area =
+        document.getElementById("questionArea");
+
+    area.innerHTML = `
+
+        <h2>${currentQuestion.text}</h2>
+
+        <div style="display:grid;gap:10px;margin-top:15px">
+
+            ${currentQuestion.options.map(
+                (option,index)=>`
+
+                    <button class="secondary"
+                        onclick="answerQuestion(${index})">
+
+                        ${option}
+
+                    </button>
+
+                `
+            ).join("")}
+
+        </div>
+
+    `;
+
+}
+
+
+function answerQuestion(index){
+
+    if(!currentQuestion) return;
+
+    current.answered++;
+
+    if(index === currentQuestion.answer){
+
+        current.correct++;
+
+        markStudy();
+
+        addXP(15);
+
+        alert("Resposta correta! +15 XP");
+
+    }else{
+
+        alert(
+            "Resposta incorreta. Continue tentando."
+        );
+
+    }
+
+    saveDB();
+
+    newQuestion();
+
+}
+
+
+/* =========================================================
+   CALENDÁRIO
+========================================================= */
+
+function renderCalendar(){
+
+    const container =
+        document.getElementById("calendarContent");
+
+    const monthText =
+        document.getElementById("calendarMonth");
+
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = now.getMonth();
+
+    monthText.textContent =
+        now.toLocaleDateString(
+            "pt-BR",
+            {
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+    const first =
+        new Date(year,month,1).getDay();
+
+    const total =
+        new Date(year,month+1,0).getDate();
+
+    let html = `
+
+        <div class="dayName">Dom</div>
+        <div class="dayName">Seg</div>
+        <div class="dayName">Ter</div>
+        <div class="dayName">Qua</div>
+        <div class="dayName">Qui</div>
+        <div class="dayName">Sex</div>
+        <div class="dayName">Sáb</div>
+
+    `;
+
+    for(let i=0;i<first;i++){
+
+        html += `<div></div>`;
+
+    }
+
+    for(let day=1;day<=total;day++){
+
+        const date =
+            new Date(year,month,day)
+            .toISOString()
+            .split("T")[0];
+
+        const today =
+            date===getToday();
+
+        const studied =
+            current.studiedDays.includes(date);
+
+        html += `
+
+            <div class="day
+                ${today ? "today":""}
+                ${studied ? "studied":""}">
+
+                ${day}
+
+                ${studied ? " ✓":""}
+
+            </div>
+
+        `;
+
+    }
+
+    container.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   PROGRESSO
+========================================================= */
+
+function renderProgress(){
+
+    document.getElementById("progressXP")
+        .textContent =
+        current.xp;
+
+    document.getElementById("progressMinutes")
+        .textContent =
+        current.studyMinutes;
+
+    document.getElementById("correct")
+        .textContent =
+        current.correct;
+
+    const accuracy =
+        current.answered
+        ? Math.round(
+            current.correct /
+            current.answered *
+            100
+        )
+        : 0;
+
+    document.getElementById("accuracy")
+        .textContent =
+        accuracy + "%";
+
+    const level =
+        getLevel();
+
+    const currentLevelXP =
+        current.xp % 100;
+
+    document.getElementById("levelText")
+        .textContent =
+        "Nível " + level +
+        " • Rank " + getRank();
+
+    document.getElementById("levelBar")
+        .style.width =
+        currentLevelXP + "%";
+
+    document.getElementById("levelXPText")
+        .textContent =
+        currentLevelXP +
+        " / 100 XP para o próximo nível";
+
+}
+
+
+/* =========================================================
+   CONQUISTAS
+========================================================= */
+
+function renderAchievements(){
+
+    const achievements = [
+
+        {
+            icon:"🌱",
+            title:"Primeiro passo",
+            text:"Ganhe 1 XP.",
+            unlocked:current.xp>=1
+        },
+
+        {
+            icon:"⭐",
+            title:"100 XP",
+            text:"Alcance 100 XP.",
+            unlocked:current.xp>=100
+        },
+
+        {
+            icon:"🔥",
+            title:"Sequência",
+            text:"Estude em 3 dias consecutivos.",
+            unlocked:getStreak()>=3
+        },
+
+        {
+            icon:"📚",
+            title:"Estudioso",
+            text:"Estude por 60 minutos.",
+            unlocked:current.studyMinutes>=60
+        },
+
+        {
+            icon:"🥊",
+            title:"Treino registrado",
+            text:"Registre um treino.",
+            unlocked:current.training.length>=1
+        },
+
+        {
+            icon:"💧",
+            title:"Hidratação",
+            text:"Registre 5 copos.",
+            unlocked:current.water>=5
+        },
+
+        {
+            icon:"❓",
+            title:"Primeira questão",
+            text:"Responda uma questão.",
+            unlocked:current.answered>=1
+        },
+
+        {
+            icon:"🏆",
+            title:"Nível 5",
+            text:"Alcance o nível 5.",
+            unlocked:getLevel()>=5
+        },
+
+        {
+            icon:"👑",
+            title:"Rank A",
+            text:"Alcance o Rank A.",
+            unlocked:getRank()==="A" || getRank()==="S"
+        }
+
+    ];
+
+    document.getElementById("achievementList")
+        .innerHTML =
+        achievements.map(a=>`
+
+            <div class="achievement
+                ${a.unlocked ? "":"locked"}">
+
+                <div class="achievementIcon">
+                    ${a.icon}
+                </div>
+
+                <h3>
+                    ${a.title}
+                </h3>
+
+                <p style="color:#94a3b8;margin-top:7px">
+                    ${a.text}
+                </p>
+
+                <strong style="display:block;margin-top:10px">
+                    ${a.unlocked ? "✓ Desbloqueada":"🔒 Bloqueada"}
+                </strong>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+/* =========================================================
+   PERFIL
+========================================================= */
+
+function renderProfile(){
+
+    document.getElementById("profileName")
+        .textContent =
+        current.name;
+
+    document.getElementById("profileRank")
+        .textContent =
+        "Rank " +
+        getRank() +
+        " • Nível " +
+        getLevel();
+
+    document.getElementById("profileAvatar")
+        .textContent =
+        current.name.charAt(0)
+        .toUpperCase();
+
+    document.getElementById("miniName")
+        .textContent =
+        current.name;
+
+    document.getElementById("miniRank")
+        .textContent =
+        "Rank " +
+        getRank() +
+        " • Nível " +
+        getLevel();
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function updateTimerDisplay(){
+
+    const minutes =
+        Math.floor(timerSeconds/60)
+        .toString()
+        .padStart(2,"0");
+
+    const seconds =
+        (timerSeconds%60)
+        .toString()
+        .padStart(2,"0");
+
+    document.getElementById("timerDisplay")
+        .textContent =
+        minutes + ":" + seconds;
+
+}
+
+
+function startTimer(){
+
+    if(timerInterval) return;
+
+    timerInterval =
+        setInterval(()=>{
+
+            if(timerSeconds<=0){
+
+                clearInterval(timerInterval);
+
+                timerInterval=null;
+
+                current.studyMinutes += 25;
+
+                markStudy();
+
+                addXP(25);
+
+                alert(
+                    "Sessão concluída! +25 XP"
+                );
+
+                resetTimer();
+
+                return;
+            }
+
+            timerSeconds--;
+
+            updateTimerDisplay();
+
+        },1000);
+
+}
+
+
+function pauseTimer(){
+
+    clearInterval(timerInterval);
+
+    timerInterval=null;
+
+}
+
+
+function resetTimer(){
+
+    pauseTimer();
+
+    timerSeconds =
+        25*60;
+
+    updateTimerDisplay();
+
+}
+
+
+/* =========================================================
+   BACKUP
+========================================================= */
+
+function exportBackup(){
+
+    const data =
+        JSON.stringify(current,null,2);
+
+    const blob =
+        new Blob(
+            [data],
+            {type:"application/json"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href=url;
+
+    a.download=
+        "studyup-backup.json";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+function importBackup(event){
+
+    const file =
+        event.target.files[0];
+
+    if(!file) return;
+
+    const reader =
+        new FileReader();
+
+    reader.onload=function(e){
+
+        try{
+
+            const imported =
+                JSON.parse(e.target.result);
+
+            if(!imported.name){
+
+                alert("Backup inválido.");
+
+                return;
+            }
+
+            db.users[current.email] =
+                imported;
+
+            current =
+                db.users[current.email];
+
+            saveDB();
+
+            updateAll();
+
+            alert("Backup restaurado!");
+
+        }catch(error){
+
+            alert(
+                "Não foi possível ler o backup."
+            );
+
+        }
+
+    };
+
+    reader.readAsText(file);
+
+}
+
+
+/* =========================================================
+   SEGURANÇA BÁSICA DE TEXTO
+========================================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   ATUALIZAÇÃO GERAL
+========================================================= */
+
+function updateAll(){
+
+    renderHome();
+
+    renderTasks();
+
+    renderSubjects();
+
+    renderNotes();
+
+    renderCalendar();
+
+    renderProgress();
+
+    renderAchievements();
+
+    renderProfile();
+
+    renderWater();
+
+    updateTimerDisplay();
+
+}
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+if(db.currentUser && db.users[db.currentUser]){
+
+    openApp();
+
+}else{
+
+    document.getElementById("loginScreen")
+        .classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>
